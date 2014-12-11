@@ -64,7 +64,7 @@ specify a development configuration with the property:
 SAVE 1 1
 ```
 
-This will check the database for changes every one second and if one or more keys
+This will check the database every second and if one or more keys
 have changed, it will update. I don't think I have to say this, but this is not
 suitable for production.
 
