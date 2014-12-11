@@ -17,7 +17,7 @@ npm install prok
 
 ## Features
 
-* Processes run as a group, making it easier to manage processes
+* Processes live and die as a group. This makes it easier to manage multiple processes.
 * Filter logs by process name (ex. `LOG=web:*`)
 * Procfile parser and environment parser well tested from `node-foreman`
 * Supports arbitrary `Procfile` and environment configurations
@@ -51,6 +51,27 @@ Example:
 Node Foreman does a good job getting processes to run together. It does not
 do a good job with logging. Spacing gets trimmed, timestamps take up too much
 space, etc.
+
+## Troubleshooting
+
+### In-memory databases
+
+Don't put in memory databases in this process manager unless you want to lose
+your changes on restart. However, if you're working with redis, you can
+specify a development configuration with the property:
+
+```
+SAVE 1 1
+```
+
+This will check the database for changes every one second and if one or more keys
+have changed, it will update. I don't think I have to say this, but this is not
+suitable for production.
+
+### Restart node on development changes
+
+If you don't like killing all the processes for each change you make to a file,
+place `node-dev` or `nodemon` in your Procfile.
 
 ## License
 
