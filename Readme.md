@@ -3,7 +3,7 @@
 
   Run multiple processes, simply.
 
-  A lighter, more focused alternative to  [node-forman](strongloop/node-foreman). This is not aiming to have feature parity with [foreman](ddollar/foreman).
+  A lighter, more focused alternative to  [node-forman](strongloop/node-foreman). This is not aiming to have feature parity with [foreman](ddollar/foreman). I would only use this in development.
 
   This is a **WIP** and the API may evolve or change.
 
@@ -17,7 +17,7 @@ npm install prok
 
 ## Features
 
-* processes run as a group, making it easier to manage processes
+* Processes run as a group, making it easier to manage processes
 * Procfile parser and environment parser well tested from `node-foreman`
 * Supports arbitrary `Procfile` and environment configurations
 * API for running processes
@@ -26,8 +26,8 @@ npm install prok
 
 ## Not supported
 
-* exporting configuration to upstart, systemd, etc.
-* starting multiple jobs of the same type (accepting PRs)
+* Exporting configuration to upstart, systemd, etc.
+* Starting multiple jobs of the same type (accepting PRs)
 
 ## CLI
 
