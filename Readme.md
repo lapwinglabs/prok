@@ -18,6 +18,7 @@ npm install prok
 ## Features
 
 * Processes run as a group, making it easier to manage processes
+* Filter logs by process name (ex. `LOG=web:*`)
 * Procfile parser and environment parser well tested from `node-foreman`
 * Supports arbitrary `Procfile` and environment configurations
 * API for running processes
