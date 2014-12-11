@@ -22,6 +22,7 @@ var program = new Command('prok')
   .version(pkg.version)
   .usage('[options] [procfile]')
   .option('-e, --env <file>', 'specify an environment configuration file', false)
+  .option('-p, --procfile <file>', 'specify an Procfile', false)
   .parse(process.argv);
 
 /**
@@ -34,7 +35,7 @@ var prok = Prok();
  * Load the procfile
  */
 
-var procfile = program.args[0] ? program.args[0] : join(cwd, 'Procfile');
+var procfile = program.procfile || program.args[0] || join(cwd, 'Procfile');
 if (!exists(procfile)) {
   console.error('  \033[31mError:\033[m cannot find Procfile');
   program.outputHelp();
