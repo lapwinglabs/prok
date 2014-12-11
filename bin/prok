@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+
+/**
+ * Module Dependencies
+ */
+
+var Command = require('commander').Command;
+var exists = require('fs').existsSync;
+var dirname = require('path').dirname;
+var pkg = require('../package');
+var join = require('path').join;
+var stdout = process.stdout;
+var stderr = process.stderr;
+var Prok = require('..');
+var cwd = process.cwd();
+
+/**
+ * Program
+ */
+
+var program = new Command('prok')
+  .version(pkg.version)
+  .usage('[options] [procfile]')
+  .option('-e, --env <file>', 'specify an environment configuration file', false)
+  .parse(process.argv);
+
+/**
+ * Initialize `prok`
+ */
+
+var prok = Prok();
+
+/**
+ * Load the procfile
+ */
+
+var procfile = program.args[0] ? program.args[0] : join(cwd, 'Procfile');
+if (!exists(procfile)) {
+  console.error('  \033[31mError:\033[m cannot find Procfile');
+  program.outputHelp();
+  process.exit(1);
+}
+
+prok
+  ? prok.procfile(procfile)
+  : prok.procfile(join(cwd, 'Procfile'))
+
+/**
+ * Load the environment
+ */
+
+var env = program.env ? program.env : join(dirname(procfile), '.env');
+if (exists(procfile)) prok.env(env);
+
+/**
+ * Start the processes
+ */
+
+prok.start();
+
+/**
+ * Listen for SIGINT
+ */
+
+process.on('SIGINT', function() {
+  prok.stop('SIGINT');
+});

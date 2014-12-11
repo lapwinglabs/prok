@@ -1,0 +1,4 @@
+web: node app-1.js
+web2: node app-2.js
+web3: node app-3.js
+mongod: mongod --dbpath db
