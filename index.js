@@ -75,6 +75,21 @@ Prok.prototype.procfile = function(path) {
 };
 
 /**
+ * Set the root
+ *
+ * @param {String} root
+ * @return {Prok}
+ * @api public
+ */
+
+Prok.prototype.root = function(root) {
+  if (!arguments.length) return this._root;
+  this._root = root;
+  return this;
+};
+
+
+/**
  * Environment variable `path`
  *
  * @param {String} path

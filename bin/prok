@@ -23,6 +23,7 @@ var program = new Command('prok')
   .usage('[options] [procfile]')
   .option('-e, --env <file>', 'specify an environment configuration file', false)
   .option('-p, --procfile <file>', 'specify an Procfile', false)
+  .option('-r, --root <dir>', 'specify an Procfile', false)
   .parse(process.argv);
 
 /**
@@ -52,6 +53,12 @@ prok
 
 var env = program.env ? program.env : join(dirname(procfile), '.env');
 if (exists(procfile)) prok.env(env);
+
+/**
+ * Add the root, if there is any
+ */
+
+program.root && prok.root(program.root);
 
 /**
  * Start the processes
