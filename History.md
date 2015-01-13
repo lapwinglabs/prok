@@ -1,4 +1,9 @@
 
+0.0.4 / 2015-01-12
+==================
+
+  * Properly close children of child processes on exit
+
 0.0.3 / 2014-12-15
 ==================
 

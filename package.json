@@ -1,6 +1,6 @@
 {
   "name": "prok",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "simpler, more focused alternative to foreman",
   "keywords": [
     "procfile",
@@ -19,7 +19,8 @@
     "debug": "^2.1.0",
     "extend.js": "0.0.2",
     "parse-procfile": "0.0.2",
-    "split": "^0.3.2"
+    "split": "^0.3.2",
+    "ps-tree": "0.0.3"
   },
   "devDependencies": {
     "mocha": "*",
