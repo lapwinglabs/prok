@@ -12,7 +12,6 @@ var join = require('path').join;
 var stdout = process.stdout;
 var stderr = process.stderr;
 var Prok = require('..');
-var cwd = process.cwd();
 
 /**
  * Program
@@ -27,25 +26,37 @@ var program = new Command('prok')
   .parse(process.argv);
 
 /**
+ * CWD
+ */
+
+var cwd = program.root || process.cwd();
+
+/**
  * Initialize `prok`
  */
 
-var prok = Prok();
+var prok = Prok(cwd);
+var processes;
 
 /**
  * Load the procfile
  */
 
 var procfile = program.procfile || program.args[0] || join(cwd, 'Procfile');
-if (!exists(procfile)) {
-  console.error('  \033[31mError:\033[m cannot find Procfile');
+
+/**
+ * Load the processes
+ */
+
+if (exists(procfile)) {
+  prok.procfile(procfile)
+} else if (processes = json(join(cwd, 'package.json')).processes) {
+  prok.processes(processes);
+} else {
+  console.error('  \033[31mError:\033[m cannot find Procfile or "processes" field in your package.json');
   program.outputHelp();
   process.exit(1);
 }
-
-prok
-  ? prok.procfile(procfile)
-  : prok.procfile(join(cwd, 'Procfile'))
 
 /**
  * Load the environment
@@ -53,12 +64,6 @@ prok
 
 var env = program.env ? program.env : join(dirname(procfile), '.env');
 if (exists(procfile)) prok.env(env);
-
-/**
- * Add the root, if there is any
- */
-
-program.root && prok.root(program.root);
 
 /**
  * Start the processes
@@ -73,3 +78,11 @@ prok.start();
 process.on('SIGINT', function() {
   prok.stop('SIGINT');
 });
+
+function json(path) {
+  try {
+    return require(path);
+  } catch (e) {
+    return {};
+  }
+}

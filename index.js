@@ -8,6 +8,7 @@ var Process = require('./lib/process.js');
 var parseEnv = require('./lib/env.js');
 var read = require('fs').readFileSync;
 var dirname = require('path').dirname;
+var resolve = require('path').resolve;
 var extend = require('extend.js');
 var debug = require('debug');
 
@@ -32,11 +33,11 @@ module.exports = Prok;
  * @api public
  */
 
-function Prok() {
-  if (!(this instanceof Prok)) return new Prok();
-  this.cwd = process.cwd();
-  this.processes = [];
-  this._procfile = {};
+function Prok(root) {
+  if (!(this instanceof Prok)) return new Prok(root);
+  this.cwd = root || process.cwd();
+  this._processes = {};
+  this.running = [];
   this.padding = 0;
   this._env = {}
 
@@ -52,20 +53,16 @@ function Prok() {
 Emitter(Prok.prototype);
 
 /**
- * Procfile `path`
- *
- * @param {String} path
- * @return {Prok|Object}
- * @api public
+ * processes
  */
 
-Prok.prototype.procfile = function(path) {
-  if (!arguments.length) return this._procfile;
-  this.cwd = dirname(path);
-  this._procfile = parseProcfile(read(path, 'utf8'));
+Prok.prototype.processes = function(obj) {
+  if (!arguments.length) return this._processes;
+
+  this._processes = obj || {};
 
   // set the padding
-  for (var process in this._procfile) {
+  for (var process in obj) {
     this.padding = this.padding < process.length
       ? process.length
       : this.padding;
@@ -74,20 +71,22 @@ Prok.prototype.procfile = function(path) {
   return this;
 };
 
+
 /**
- * Set the root
+ * Procfile `path`
  *
- * @param {String} root
- * @return {Prok}
+ * @param {String} path
+ * @return {Prok|Object}
  * @api public
  */
 
-Prok.prototype.root = function(root) {
-  if (!arguments.length) return this._root;
-  this._root = root;
+Prok.prototype.procfile = function(path) {
+  if (!arguments.length) return this.processes();
+  path = resolve(this.cwd, path);
+  var processes = parseProcfile(read(path, 'utf8'));
+  this.processes(processes);
   return this;
 };
-
 
 /**
  * Environment variable `path`
@@ -112,10 +111,10 @@ Prok.prototype.env = function(path) {
  */
 
 Prok.prototype.start = function() {
-  var procfile = this.procfile();
-  var processes = this.processes;
-  for (var name in procfile) {
-    var process = processes[processes.length] = Process(name, procfile[name], this);
+  var processes = this.processes();
+  var running = this.running;
+  for (var name in processes) {
+    var process = running[running.length] = Process(name, processes[name], this);
     process.start();
   }
   return this;
