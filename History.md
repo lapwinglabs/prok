@@ -1,4 +1,9 @@
 
+0.0.5 / 2015-07-23
+==================
+
+  * add support for 'processes' object in your package.json
+
 0.0.4 / 2015-01-12
 ==================
 
