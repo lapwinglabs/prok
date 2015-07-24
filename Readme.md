@@ -19,6 +19,7 @@ npm install prok
 
 * Processes live and die as a group. This makes it easier to manage multiple processes.
 * Filter logs by process name (ex. `LOG=web:*`)
+* Specify processes to run by added a `processes` key to your `package.json`
 * Procfile parser and environment parser well tested from `node-foreman`
 * Supports arbitrary `Procfile` and environment configurations
 * API for running processes
