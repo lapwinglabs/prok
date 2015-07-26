@@ -16,11 +16,11 @@
   "dependencies": {
     "commander": "^2.5.0",
     "component-emitter": "^1.1.3",
-    "debug": "^2.1.0",
+    "debug": "^2.2.0",
     "extend.js": "0.0.2",
     "parse-procfile": "0.0.2",
-    "split": "^0.3.2",
-    "ps-tree": "0.0.3"
+    "ps-tree": "0.0.3",
+    "split": "^0.3.2"
   },
   "devDependencies": {
     "mocha": "*",
