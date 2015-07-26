@@ -1,4 +1,10 @@
 
+0.0.6 / 2015-07-26
+==================
+
+  * update regexp for latest debug
+  * add update to readme
+
 0.0.5 / 2015-07-23
 ==================
 
