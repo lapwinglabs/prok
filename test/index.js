@@ -1,7 +1,7 @@
 var Prok = require('..');
 
 var prok = Prok(__dirname)
-  .processes(require('./package.json').processes)
+  .processes(require('./package.json').processes[process.argv[2] || 'default'])
   .env(__dirname + '/.env');
 
 prok.start();
