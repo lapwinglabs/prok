@@ -2,9 +2,15 @@
   "name": "prok",
   "version": "0.0.1",
   "processes": {
-    "web": "node app-1.js",
-    "web2": "node app-2.js",
-    "web3": "node app-3.js",
-    "mongod": "mongod --dbpath db"
+    "default": {
+      "web": "node app-1.js",
+      "web2": "node app-2.js",
+      "web3": "node app-3.js",
+      "mongod": "mongod --dbpath db"
+    },
+    "test": {
+      "web1": "node app-1.js",
+      "mongod": "mongod --dbpath db"
+    }
   }
 }

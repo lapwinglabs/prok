@@ -20,9 +20,10 @@ var Prok = require('..');
 var program = new Command('prok')
   .version(pkg.version)
   .usage('[options] [procfile]')
+  .option('-c, --config <config>', 'specify a configuration', false)
   .option('-e, --env <file>', 'specify an environment configuration file', false)
-  .option('-p, --procfile <file>', 'specify an Procfile', false)
-  .option('-r, --root <dir>', 'specify an Procfile', false)
+  .option('-p, --procfile <file>', 'specify a Procfile', false)
+  .option('-r, --root <dir>', 'specify a root directory', false)
   .parse(process.argv);
 
 /**
@@ -43,15 +44,17 @@ var processes;
  */
 
 var procfile = program.procfile || program.args[0] || join(cwd, 'Procfile');
+var config = program.procfile || program.args[0];
 
 /**
  * Load the processes
  */
 
 if (exists(procfile)) {
-  prok.procfile(procfile)
+  prok.procfile(procfile);
 } else if (processes = json(join(cwd, 'package.json')).processes) {
-  prok.processes(processes);
+  if (!config && typeof processes.default !== 'object') prok.processes(processes);
+  else prok.processes(processes[config || 'default']);
 } else {
   console.error('  \033[31mError:\033[m cannot find Procfile or "processes" field in your package.json');
   program.outputHelp();
