@@ -1,6 +1,6 @@
 {
   "name": "prok",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "simpler, more focused alternative to foreman",
   "keywords": [
     "procfile",

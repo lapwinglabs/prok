@@ -1,4 +1,9 @@
 
+0.0.8 / 2016-04-20
+==================
+
+  * gracefully terminate grandchildren (instead of sig 9)
+
 0.0.7 / 2015-09-28
 ==================
 
